@@ -22,7 +22,10 @@ setup(
     version=verstr,
     packages=["py_channelmap"],
     install_requires=[
-        "numpy==1.16.*",
+        "numpy",
+        "scipy",
+        "matplotlib",
+        "regex",
     ],
     author="Marine Chaput",
     author_email="marine.chaput@nerf.be",

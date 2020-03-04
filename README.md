@@ -10,10 +10,21 @@ Python tools to create channelmaps:
 The focus is set on an uniform way to create a channelmap without worrying of the implementation behind.
 Because of the probe class and the probe template, the way to create and display a channelmap is always identical with the exception of indicating the type of probes used and their options.
 
-## Installation - User mode
+## Installation
+
+### User mode
 
 ```bash
   pip install git+https://github.com/nerf-common/channelmap-generation.git
+```
+
+### Developper mode
+
+```bash
+  git clone https://github.com/nerf-common/channelmap-generation.git
+  cd channelmap-generation
+  python setup.py build_ext --inplace
+  pip install -e .
 ```
 
 
