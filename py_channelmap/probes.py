@@ -83,36 +83,66 @@ class probes:
         )
 
         if map_format is "channelmap":
-            with open(filename + ".channelmap", "w") as file:
-                file.write("Probe,Data,Disconnect,X,Y,Shank\n")
-                for i in range(len(self.probe.chanMap)):
-                    file.write(
-                        str(int(self.probe.chanMap[i]))
-                        + ","
-                        + str(int(self.probe.chanMap0ind[i]))
-                        + ","
-                        + str(int(self.probe.connected[i]))
-                        + ","
-                        + str(int(self.probe.xCoord[i]))
-                        + ","
-                        + str(int(self.probe.yCoord[i]))
-                        + ","
-                        + str(int(self.probe.kCoord[i]))
-                        + "\n"
-                    )
+            self._channelmap_format(filename)
         elif map_format is "mat":
-            savemat(
-                filename + ".mat",
-                {
-                    "chanMap": self.probe.chanMap,
-                    "chanMap0ind": self.probe.chanMap0ind,
-                    "connected": self.probe.connected,
-                    "name": self.probe.filename + ".mat",
-                    "xcoords": self.probe.xCoord,
-                    "ycoords": self.probe.yCoord,
-                    "kcoords": self.probe.kCoord,
-                },
-            )
+            self._mat_format(filename)
+        elif map_format is "prb":
+            pass
+
+    def _pb_format(self, filename):
+
+        for index, chan in enumerate(self.probe.chanMap):
+            channel.update = {
+                chan: [
+                    self.probe.xCoord[index],
+                    self.probe.yCoord[index],
+                    self.probe.kCoord[index],
+                ]
+            }
+
+        dict_channel = {
+            1: {
+                "channels": self.probe.chanMap[self.probe.connected == 1],
+                "graph": [],
+                "geometry": channel,
+            }
+        }
+        with open(filename + ".prb", "w") as file:
+            file.write("total_nb_channels = %s" % str(len(self.probe.elecInd)))
+            file.write("channel_groups = %s" % str(dict_channel))
+
+    def _mat_format(self, filename):
+        savemat(
+            filename + ".mat",
+            {
+                "chanMap": self.probe.chanMap,
+                "chanMap0ind": self.probe.chanMap0ind,
+                "connected": self.probe.connected,
+                "name": self.probe.filename + ".mat",
+                "xcoords": self.probe.xCoord,
+                "ycoords": self.probe.yCoord,
+                "kcoords": self.probe.kCoord,
+            },
+        )
+
+    def _channelmap_format(self, filename):
+        with open(filename + ".channelmap", "w") as file:
+            file.write("Probe,Data,Disconnect,X,Y,Shank\n")
+            for i in range(len(self.probe.chanMap)):
+                file.write(
+                    str(int(self.probe.chanMap[i]))
+                    + ","
+                    + str(int(self.probe.chanMap0ind[i]))
+                    + ","
+                    + str(int(self.probe.connected[i]))
+                    + ","
+                    + str(int(self.probe.xCoord[i]))
+                    + ","
+                    + str(int(self.probe.yCoord[i]))
+                    + ","
+                    + str(int(self.probe.kCoord[i]))
+                    + "\n"
+                )
 
     def draw(self, plot_line=False, annotation=False):
         """ Draw the channel map computed
