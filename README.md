@@ -63,7 +63,8 @@ Using this option will override others paths previously generated.
 - map_format : format to save
     - channelmap (default) : csv format with headers
     - mat : matlab format
-
+    - prb : prb format
+    
 It will generate the adequat channelmap file + a txt file linking the hardware electrod id with the acquisition number (often called channel id in the channelmap)
 
 ```
