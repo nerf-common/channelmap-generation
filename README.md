@@ -55,6 +55,12 @@ hdw = probes("neuropixels", "*.ap.meta")
   hdw =  probes("tetrodes", nb_tetrode, spacing = spacing)
 ```
 
+**Read from a already existing channelmap**
+You can also read and transform in another format an already existing channelmap file.
+```python
+  hdw =  probes.read_from("path/to/*.channelmap")
+```
+
 **Create and draw your channelmap**
 
 2 optional arguments:

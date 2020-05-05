@@ -12,6 +12,7 @@ import numpy as np
 from scipy.io import savemat
 
 from .neuropixels.spikeGLX import neuropixels
+from .template_probes import unknown_probe
 from .tetrodes import tetrode
 
 __all__ = ["probes"]
@@ -47,13 +48,18 @@ class probes:
             ), "this keyword take in input at least one other parameter : the number of tetrodes. Also, it can take one other optional parameter: the space between rows"
 
             self.probe = tetrode(*options, **kwargs)
-
+        elif probes_type == "unknown":
+            self.probe = unknown_probe.from_dict(options[0])
         else:
             raise (
                 ValueError(
                     "Probe type not yet implemented: if interested by it, create an issue in the repo"
                 )
             )
+
+    @classmethod
+    def read_from(cls, file):
+        return cls("unknown", file)
 
     def create_channel_map(self, path=None, map_format="channelmap"):
         """ Launch the creation of the channel map on the right type of probe
@@ -67,38 +73,40 @@ class probes:
                     "No saving path specify both in the specification or in this method. Make use of the path option"
                 )
             )
-
-        np.savetxt(
-            filename + "_electrod_ind.txt",
-            np.concatenate(
-                (
-                    self.probe.elecInd.reshape((len(self.probe.elecInd), 1)),
-                    self.probe.chanMap.reshape((len(self.probe.elecInd), 1)),
+        if self.probe.elecInd:
+            np.savetxt(
+                filename + "_electrod_ind.txt",
+                np.concatenate(
+                    (
+                        self.probe.elecInd.reshape((len(self.probe.elecInd), 1)),
+                        self.probe.chanMap.reshape((len(self.probe.elecInd), 1)),
+                    ),
+                    axis=1,
                 ),
-                axis=1,
-            ),
-            header="electrodes id",
-            fmt="%-4d",
-            delimiter="",
-        )
+                header="electrodes id",
+                fmt="%-4d",
+                delimiter="",
+            )
 
         if map_format is "channelmap":
             self._channelmap_format(filename)
         elif map_format is "mat":
             self._mat_format(filename)
         elif map_format is "prb":
-            pass
+            self._pb_format(filename)
 
     def _pb_format(self, filename):
-
+        channel = {}
         for index, chan in enumerate(self.probe.chanMap):
-            channel.update = {
-                chan: [
-                    self.probe.xCoord[index],
-                    self.probe.yCoord[index],
-                    self.probe.kCoord[index],
-                ]
-            }
+            channel.update(
+                {
+                    chan: [
+                        self.probe.xCoord[index],
+                        self.probe.yCoord[index],
+                        self.probe.kCoord[index],
+                    ]
+                }
+            )
 
         dict_channel = {
             1: {
@@ -108,7 +116,10 @@ class probes:
             }
         }
         with open(filename + ".prb", "w") as file:
-            file.write("total_nb_channels = %s" % str(len(self.probe.elecInd)))
+            file.write(
+                "total_nb_channels = %s\n"
+                % str(len(self.probe.chanMap[self.probe.connected == 1]))
+            )
             file.write("channel_groups = %s" % str(dict_channel))
 
     def _mat_format(self, filename):
