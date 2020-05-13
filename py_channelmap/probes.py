@@ -11,9 +11,9 @@ Utilities collection for probes :
 import numpy as np
 from scipy.io import savemat
 
-from .neuropixels.spikeGLX import neuropixels
-from .template_probes import unknown_probe
-from .tetrodes import tetrode
+from py_channelmap.neuropixels.spikeGLX import neuropixels
+from py_channelmap.template_probes import unknown_probe
+from py_channelmap.tetrodes import tetrode
 
 __all__ = ["probes"]
 

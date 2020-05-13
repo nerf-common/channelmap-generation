@@ -12,10 +12,10 @@ from pathlib import Path
 import numpy as np
 import regex as re
 
-from ..template_probes import template_probe
-from .readSGLX import ChannelCountsIM
-from .readSGLX import OriginalChans
-from .readSGLX import readMeta
+from py_channelmap.neuropixels.readSGLX import ChannelCountsIM
+from py_channelmap.neuropixels.readSGLX import OriginalChans
+from py_channelmap.neuropixels.readSGLX import readMeta
+from py_channelmap.template_probes import template_probe
 
 __all__ = ["neuropixels"]
 

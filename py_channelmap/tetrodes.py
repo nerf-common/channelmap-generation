@@ -8,7 +8,7 @@ Generation of tetrode channelmap
 __all__ = ["tetrode"]
 
 import numpy as np
-from .template_probes import template_probe
+from py_channelmap.template_probes import template_probe
 
 
 class tetrode(template_probe):
