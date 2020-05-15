@@ -1,1 +1,1 @@
-from .probes import probes
+from py_channelmap.probes import probes
