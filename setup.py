@@ -20,7 +20,7 @@ else:
 setup(
     name="py_channelmap",
     version=verstr,
-    packages=["py_channelmap"],
+    packages=["py_channelmap", "py_channelmap.neuropixels],
     install_requires=[
         "numpy",
         "scipy",
