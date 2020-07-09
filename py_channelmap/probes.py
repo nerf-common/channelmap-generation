@@ -110,17 +110,15 @@ class probes:
 
         dict_channel = {
             1: {
-                "channels": self.probe.chanMap[self.probe.connected == 1],
-                "graph": [],
+                "channels": list(self.probe.chanMap[self.probe.connected == 0]),
                 "geometry": channel,
             }
         }
         with open(filename + ".prb", "w") as file:
-            file.write(
-                "total_nb_channels = %s\n"
-                % str(len(self.probe.chanMap[self.probe.connected == 1]))
-            )
-            file.write("channel_groups = %s" % str(dict_channel))
+            text = "total_nb_channels = %s\n" % str(
+                len(self.probe.chanMap)
+            ) + "channel_groups = %s" % str(dict_channel)
+            file.write(text)
 
     def _mat_format(self, filename):
         savemat(
