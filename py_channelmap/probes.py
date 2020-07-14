@@ -73,20 +73,20 @@ class probes:
                     "No saving path specify both in the specification or in this method. Make use of the path option"
                 )
             )
-        if self.probe.elecInd:
-            np.savetxt(
-                filename + "_electrod_ind.txt",
-                np.concatenate(
-                    (
-                        self.probe.elecInd.reshape((len(self.probe.elecInd), 1)),
-                        self.probe.chanMap.reshape((len(self.probe.elecInd), 1)),
-                    ),
-                    axis=1,
-                ),
-                header="electrodes id",
-                fmt="%-4d",
-                delimiter="",
-            )
+        # if self.probe.elecInd:
+        #    np.savetxt(
+        #        filename + "_electrod_ind.txt",
+        #        np.concatenate(
+        #            (
+        #                self.probe.elecInd.reshape((len(self.probe.elecInd), 1)),
+        #                self.probe.chanMap.reshape((len(self.probe.elecInd), 1)),
+        #            ),
+        #            axis=1,
+        #        ),
+        #        header="electrodes id",
+        #        fmt="%-4d",
+        #        delimiter="",
+        #    )
 
         if map_format is "channelmap":
             self._channelmap_format(filename)
