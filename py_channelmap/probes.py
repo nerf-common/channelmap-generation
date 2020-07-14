@@ -98,15 +98,7 @@ class probes:
     def _pb_format(self, filename):
         channel = {}
         for index, chan in enumerate(self.probe.chanMap):
-            channel.update(
-                {
-                    chan: [
-                        self.probe.xCoord[index],
-                        self.probe.yCoord[index],
-                        self.probe.kCoord[index],
-                    ]
-                }
-            )
+            channel.update({chan: [self.probe.xCoord[index], self.probe.yCoord[index]]})
 
         dict_channel = {
             1: {
