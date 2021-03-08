@@ -35,12 +35,7 @@ class probes:
     def __init__(self, probes_type, *options, **kwargs):
 
         if probes_type == "neuropixels":
-
-            assert (
-                "meta" in options[0]
-            ), "this keyword take in input at least one other parameter : the path to the meta file from spikeGLX"
-
-            self.probe = neuropixels(options[0])
+            self.probe = neuropixels(options[0].replace("bin", "meta"))
 
         elif probes_type == "tetrodes":
             assert isinstance(
