@@ -1,3 +1,6 @@
+/!\ Should not be used anymore as the developement moved into the https://github.com/SpikeInterface/probeinterface. 
+
+
 [![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads/release/python-360/)
 
 # py-channelmap
